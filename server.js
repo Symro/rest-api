@@ -49,6 +49,14 @@ router.route('/users')
             res.json({ message: 'User créé !' });
         });
 
+    })
+    .get(function(req, res){
+        User.find(function(err, users){
+            if(err)
+                res.send(err);
+
+                res.json(users);
+        });
     });
 
 // Ensemble des routes
