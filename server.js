@@ -10,8 +10,8 @@ var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 var Profile = require('./app/models/profile');
 
-// configure app to use bodyParser()
 // this will let us get the data from a POST
+// parse the body to access parameters in requests like req.body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -35,13 +35,26 @@ router.get('/', function(req, res) {
 
 router.route('/profiles')
 
-    // creation utilisateur at POST http://localhost:8080/api/profiles)
+    // creation profil at POST http://localhost:8080/api/profiles)
     .post(function(req, res) {
 
-        var profile = new Profile(); 		// Nouvelle instance d'utilisateur
-        profile.name = req.body.name;  // nom de l'utilisateur
+        // Nouvelle instance
+        var profile = new Profile();
+        profile.firstName = req.body.firstName;
+        profile.lastName = req.body.lastName;
+        profile.sex = req.body.sex;
+        profile.birth = req.body.birth;
+        profile.city = req.body.city;
+        profile.nationality = req.body.nationality;
+        profile.avatar = req.body.avatar;
+        profile.favoriteNumber = req.body.favoriteNumber;
+        profile.position = req.body.position;
+        profile.profileSize = req.body.profileSize;
+        profile.weight = req.body.weight;
+        profile.strongFoot = req.body.strongFoot;
+        profile.favoriteClub = req.body.favoriteClub;
 
-        // save de l'utilisateur et check des erreurs
+        // save du profil et check des erreurs
         profile.save(function(err) {
             if (err)
                 res.send(err);
@@ -59,7 +72,7 @@ router.route('/profiles')
         });
     });
 
-router.route('/profiles/:profile_id')
+router.route('/profile/:profile_id')
 
     // Récupérer un profil par son id
     .get(function(req, res){
@@ -67,16 +80,14 @@ router.route('/profiles/:profile_id')
             if(err)
                 res.send(err);
 
-            res.json(profil);
+            res.json(profile);
         });
     });
 
 // Ensemble des routes
-// prefix /api
-app.use('/api', router);
+// prefix /
+app.use('/', router);
 
 // Démarrage server
 app.listen(port);
 console.log('ça envoie du lourd sur le port : ' + port);
-
-// Utiliser POSTMAN
