@@ -8,7 +8,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
-var User = require('./app/models/user');
+var Profile = require('./app/models/profile');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -33,41 +33,41 @@ router.get('/', function(req, res) {
     res.json({ message: 'Comme sur des roulettes !' });
 });
 
-router.route('/users')
+router.route('/profiles')
 
-    // creation utilisateur at POST http://localhost:8080/api/users)
+    // creation utilisateur at POST http://localhost:8080/api/profiles)
     .post(function(req, res) {
 
-        var user = new User(); 		// Nouvelle instance d'utilisateur
-        user.name = req.body.name;  // nom de l'utilisateur
+        var profile = new Profile(); 		// Nouvelle instance d'utilisateur
+        profile.name = req.body.name;  // nom de l'utilisateur
 
         // save de l'utilisateur et check des erreurs
-        user.save(function(err) {
+        profile.save(function(err) {
             if (err)
                 res.send(err);
 
-            res.json({ message: 'User créé !' });
+            res.json({ message: 'Profil créé !' });
         });
 
     })
     .get(function(req, res){
-        User.find(function(err, users){
+        Profile.find(function(err, profiles){
             if(err)
                 res.send(err);
 
-                res.json(users);
+                res.json(profiles);
         });
     });
 
-router.route('/users/:user_id')
+router.route('/profiles/:profile_id')
 
-    // Récupérer un user par son id
+    // Récupérer un profil par son id
     .get(function(req, res){
-        User.findById(req.params.user_id, function(err, user){
+        Profile.findById(req.params.profile_id, function(err, profile){
             if(err)
                 res.send(err);
 
-            res.json(user);
+            res.json(profil);
         });
     });
 
