@@ -39,20 +39,41 @@ router.route('/profiles')
     .post(function(req, res) {
 
         // Nouvelle instance
-        var profile = new Profile();
-        profile.firstName = req.body.firstName;
-        profile.lastName = req.body.lastName;
-        profile.sex = req.body.sex;
-        profile.birth = req.body.birth;
-        profile.city = req.body.city;
-        profile.nationality = req.body.nationality;
-        profile.avatar = req.body.avatar;
-        profile.favoriteNumber = req.body.favoriteNumber;
-        profile.position = req.body.position;
-        profile.profileSize = req.body.profileSize;
-        profile.weight = req.body.weight;
-        profile.strongFoot = req.body.strongFoot;
-        profile.favoriteClub = req.body.favoriteClub;
+        var profile = new Profile({
+            firstName      : req.body.firstName,
+            lastName       : req.body.lastName,
+            nickName       : req.body.nickName,
+            sex            : req.body.sex,
+            birth          : req.body.birth,
+            city           : req.body.city,
+            nationality    : req.body.nationality,
+            avatar         : req.body.avatar,
+            favoriteNumber : req.body.favoriteNumber,
+            position       : req.body.position,
+            height         : req.body.height,
+            weight         : req.body.weight,
+            strongFoot     : req.body.strongFoot,
+            favoriteClub   : req.body.favoriteClub
+        });
+
+        // Exemple de JSON OBJECT à envoyer au serveur :
+        //
+        // {
+        //     "firstName": "Prénom",
+        //     "lastName": "Nom de famille",
+        //     "nickName": "Pseudo",
+        //     "sex": "M",
+        //     "birth": "Thu Mar 26 2015 21:28:19 GMT+0100",
+        //     "city": "Paris",
+        //     "nationality": "Française",
+        //     "avatar": "avatar.jpg",
+        //     "favoriteNumber": "1",
+        //     "position": "Attaquant",
+        //     "height": 180,
+        //     "weight": 80,
+        //     "strongFoot": "droitier",
+        //     "favoriteClub": "---"
+        // }
 
         // save du profil et check des erreurs
         profile.save(function(err) {
@@ -72,7 +93,7 @@ router.route('/profiles')
         });
     });
 
-router.route('/profile/:profile_id')
+router.route('/profiles/:profile_id')
 
     // Récupérer un profil par son id
     .get(function(req, res){
